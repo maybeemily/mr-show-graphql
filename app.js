@@ -4,10 +4,9 @@ const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require('mongoose');
+const Quote = require('./models/quote');
 
 const app = express();
-
-const quotes = [];
 
 app.use(bodyParser.json());
 
@@ -39,15 +38,32 @@ app.use('/graphql', graphqlHttp({
     `),
     rootValue: {
         quotes: () => {
-            return quotes;
+            return Quote.find()
+            .then(quotes => {
+                return quotes.map(quote => {
+                    return{...quote._doc };
+                })
+            })
+            .catch(err => {
+                throw err;
+            })
+            ;
         },
         addQuote: args => {
-            const quote = {
-                _id: Math.random().toString(),
+            const quote = new Quote({
                 quote: args.quoteInput.quote,
                 sfw: args.quoteInput.sfw
-            }
-            quotes.push(quote);
+            });
+            return quote
+            .save()
+            .then(result => {
+                console.log(result);
+                return result;
+            })
+            .catch(err => {
+                console.log(err);
+                throw err;
+            });
             return quote;
         }
     },
