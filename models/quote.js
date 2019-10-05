@@ -7,6 +7,18 @@ const quoteSchema = new Schema({
         type: String,
         required: true
     },
+    character: {
+        type: Schema.Types.ObjectId,
+        ref: 'Character'
+    },
+    episode: {
+        type: Schema.Types.ObjectId,
+        ref: 'Episode'
+    },
+    castMember: {
+        type: Schema.Types.ObjectId,
+        ref: 'CastMember'
+    },
     sfw: {
         type: Boolean,
         required: true
