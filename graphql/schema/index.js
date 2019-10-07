@@ -20,7 +20,7 @@ input QuoteInput {
     quote: String!
     character: String!
     episode: String!
-    castMember: ID
+    castMemberID: ID
     sfw: Boolean!
 }
 
