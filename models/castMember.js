@@ -7,18 +7,6 @@ const castMemberSchema = new Schema({
             type: String,
             required: true
         },
-        characters: [
-            {
-            type: Schema.Types.ObjectId,
-            ref: 'Character'
-        }
-    ],
-        episode: [
-            {
-            type: Schema.Types.ObjectId,
-            ref: 'Episode'
-        }
-    ],
         quotes: [
             {
             type: Schema.Types.ObjectId,

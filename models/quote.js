@@ -8,12 +8,10 @@ const quoteSchema = new Schema({
         required: true
     },
     character: {
-        type: Schema.Types.ObjectId,
-        ref: 'Character'
+        type: String
     },
     episode: {
-        type: Schema.Types.ObjectId,
-        ref: 'Episode'
+        type: String
     },
     castMember: {
         type: Schema.Types.ObjectId,

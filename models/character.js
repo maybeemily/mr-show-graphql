@@ -16,6 +16,12 @@ const characterSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Quote'
         }
+    ],
+    episodes: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Episode'
+        }
     ]
     
 });
