@@ -16,34 +16,36 @@ const singleCastMember = async castMemberId => {
 }
 
 module.exports = {
-quotes: () => {
-    return Quote.find()
-    .populate('castMember')
-    .then(quotes => {
-        return quotes.map(quote => {
-            return {
-                ...quote._doc,
-                _id: quote.id,
-                castMember: singleCastMember.bind(this, quote.castMember)
-            };
-        })
-    })
-    .catch(err => {
-        throw err;
-    })
-    ;
+quotes: async () => {
+    try {
+            const quotes = await Quote.find()
+                .populate('castMember');
+            return quotes.map(quote => {
+                return {
+                    ...quote._doc,
+                    _id: quote.id,
+                    castMember: singleCastMember.bind(this, quote.castMember)
+                };
+            });
+        }
+        catch (err) {
+            throw err;
+        }
 },
 addQuote: async args => {
     const fetchedCastMember = await CastMember.findOne({_id: args.quoteInput.castMemberID})
     const quote = new Quote({
         quote: args.quoteInput.quote,
+        character: args.quoteInput.character,
+        episode: args.quoteInput.episode,
+        castMember: fetchedCastMember,
         sfw: args.quoteInput.sfw,
-        castMember: fetchedCastMember
+
     });
     try {
         const result = await quote.save();
         console.log(result);
-        return {...result};
+        return result;
     }
     catch (err) {
         console.log(err);
