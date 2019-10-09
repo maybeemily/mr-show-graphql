@@ -1,5 +1,6 @@
 const Quote = require('../../models/quote');
 const CastMember = require('../../models/castMember')
+const Episode = require('../../models/episode')
 
 const singleCastMember = async castMemberId => {
     try {
@@ -8,6 +9,20 @@ const singleCastMember = async castMemberId => {
             ...castMember,
             _id: castMember.id,
             name: castMember.name
+        }
+    } 
+    catch (err) {
+        throw err;
+    }
+}
+
+const singleEpisode = async episode => {
+    try {
+        const episode = await Episode.findOne(episode);
+        return {
+            ...episode,
+            _id: episode.id,
+            episode: episode.episode
         }
     } 
     catch (err) {
